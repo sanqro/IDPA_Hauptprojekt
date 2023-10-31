@@ -7,7 +7,7 @@ app.use(cors());
 
 app.get("/", (req, res) =>
   res.status(200).json({
-    msg: "Root endpoint of: https://github.com/sanqro/IDPA_Hauptprojekt"
+    msg: "This is the API for following application on GitHub: https://github.com/sanqro/IDPA_Hauptprojekt"
   })
 );
 
