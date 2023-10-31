@@ -1,0 +1,10 @@
+v: 0
+micros:
+  - name: IDPA_Haupt
+    src: .
+    engine: nodejs16
+    commands:
+      - npm run build
+    run: "node --no-warnings dist/index.js"
+    public_routes:
+      - "/*"
