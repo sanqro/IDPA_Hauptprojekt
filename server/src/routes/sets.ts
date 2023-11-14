@@ -49,7 +49,13 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 router.get("/getAll", async (req, res) => {
-});
+    try {
+        const fetchedSets = await sets.fetch();
+        res.status(201).json({ fetchedSets });
+      } catch (err) {
+        res.status(503).json({ error: err.message });
+      }
+    });
 
 router.get("/get/:id", async (req, res) => {
 });
