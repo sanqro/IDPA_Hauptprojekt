@@ -1,8 +1,8 @@
 // App.tsx
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./Home";
-import Navigation from "./Navigation";
+import Home from "./components/Home.tsx";
+import Navigation from "./components/Navigation.tsx";
 import Login from "./Login";
 import Karten from "./Karten";
 
