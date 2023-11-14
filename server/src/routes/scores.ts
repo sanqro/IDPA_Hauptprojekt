@@ -7,7 +7,7 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 // deta setup
 const projectKey: string = process.env.DETA_PROJECT_KEY;
 const deta = Deta(projectKey);
-const auth = deta.Base("scores");
+const scores = deta.Base("scores");
 
 const router = express.Router();
 
