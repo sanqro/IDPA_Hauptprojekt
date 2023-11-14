@@ -20,6 +20,11 @@ const router = express.Router();
 router.post("/register", async (req, res) => {
     try {
         const authFormData: IAuthFormData = req.body as IAuthFormData;
+
+        if (authFormData.username === "" || authFormData.password === "" || authFormData.username === undefined || authFormData.password === undefined) {
+            throw new Error("Invalid Request");
+          }
+
         if (!(await users.get(authFormData.username))) {
           const passwordHash = await argon2.hash(authFormData.password);
           const auhtFormDataJson = {
@@ -45,6 +50,10 @@ router.post("/login", async (req, res) => {
     try {
         const authFormData: IAuthFormData = req.body as IAuthFormData;
     
+        if (authFormData.username === "" || authFormData.password === "" || authFormData.username === undefined || authFormData.password === undefined) {
+            throw new Error("Invalid Request");
+          }
+          
         const user = await users.get(authFormData.username);
     
         if (user === null) {
