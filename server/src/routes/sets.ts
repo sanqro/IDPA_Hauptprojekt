@@ -61,8 +61,20 @@ router.get("/getAll", async (req, res) => {
     });
 
 router.get("/get/:id", async (req, res) => {
-});
-
+    try {
+        const fetchedSet = await sets.get(req.params.id);
+        if (fetchedSet == null) {
+          res.status(409).json({
+            error: "This set does not exist.",
+          });
+          return false;
+        } else {
+          res.status(201).json({ fetchedSet });
+        }
+      } catch (err) {
+        res.status(503).json({ error: err.message });
+      }
+    });
 
 router.get("/get/:number", async (req, res) => {
 });
