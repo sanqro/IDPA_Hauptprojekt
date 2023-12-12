@@ -86,4 +86,32 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
+router.get("/getAll", async (req, res) => {
+  try {
+    const fetchedScore = await scores.fetch();
+    if (fetchedScore === null) {
+      throw new Error("No scores found");
+    }
+    res.status(201).json({ fetchedScore });
+  } catch (err) {
+    res.status(503).json({ error: err.message });
+  }
+});
+
+router.get("/get/:id", async (req, res) => {
+  try {
+    const fetchedScore = await scores.get(req.params.id);
+    if (fetchedScore == null) {
+      res.status(409).json({
+        error: "This score does not exist."
+      });
+      return false;
+    } else {
+      res.status(201).json({ fetchedScore });
+    }
+  } catch (err) {
+    res.status(503).json({ error: err.message });
+  }
+});
+
 export default router;
