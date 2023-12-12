@@ -45,7 +45,7 @@ router.post("/update", async (req, res) => {
     const scoreData: IScoreData = req.body as IScoreData;
 
     if (!(await scores.get(req.body.oldKey))) {
-      throw new Error("This set does not exist.");
+      throw new Error("This score does not exist.");
     }
 
     const scoreDataJson = {
@@ -64,6 +64,23 @@ router.post("/update", async (req, res) => {
       score: scoreData.score,
       success: true
     });
+  } catch (err) {
+    res.status(503).json({ error: err.message });
+  }
+});
+
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const fetchedScore = await scores.get(req.params.id as string);
+    if (fetchedScore != null) {
+      await scores.delete(req.params.id as string);
+      res.status(200).json({ message: "Deleted score", id: req.params.id, sucess: true });
+    } else {
+      res.status(409).json({
+        error: "This score does not exist."
+      });
+      return false;
+    }
   } catch (err) {
     res.status(503).json({ error: err.message });
   }
