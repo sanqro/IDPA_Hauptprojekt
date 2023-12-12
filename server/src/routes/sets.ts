@@ -72,7 +72,22 @@ router.post("/update", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {});
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    const fetchedSet = await sets.get(req.params.id as string);
+    if (fetchedSet != null) {
+      await sets.delete(req.params.id as string);
+      res.status(200).json({ message: "Deleted set", id: req.params.id, sucess: true });
+    } else {
+      res.status(409).json({
+        error: "This set does not exist."
+      });
+      return false;
+    }
+  } catch (err) {
+    res.status(503).json({ error: err.message });
+  }
+});
 
 router.get("/getAll", async (req, res) => {
   try {
@@ -101,7 +116,5 @@ router.get("/get/:id", async (req, res) => {
     res.status(503).json({ error: err.message });
   }
 });
-
-router.get("/get/:number", async (req, res) => {});
 
 export default router;
