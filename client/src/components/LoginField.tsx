@@ -16,7 +16,7 @@ function LoginField() {
       return false;
     }
 
-    const login = await fetch("https://api.sanqro.me/auth/login", {
+    const login = await fetch("https://api.quiz.sanqro.me/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
