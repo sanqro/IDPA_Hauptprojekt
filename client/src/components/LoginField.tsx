@@ -67,6 +67,12 @@ function LoginField() {
             label="Login"
             className="py-2 px-4 text-white text-xl rounded mx-10% bg-blue-500 hover:bg-blue-600 w-full"
           />
+          <button
+            onClick={() => nav("/register")}
+            className="text-blue-600 hover:text-blue-700 text-lg font-medium"
+          >
+            No Account Yet? Sign Up Now!
+          </button>
         </div>
       </div>
     </div>
