@@ -7,8 +7,8 @@ export interface ISetData {
     key: string; // username of creator + set key
     creator: string;
     title: string;
-    question: string;
-    answer: string;
+    question: string[];
+    answer: string[];
 }
 
 
