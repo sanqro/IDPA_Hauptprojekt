@@ -86,9 +86,9 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.get("/getAll", async (req, res) => {
+router.get("/get/:username", async (req, res) => {
   try {
-    const fetchedScore = await scores.fetch();
+    const fetchedScore = await scores.fetch({ username: req.params.username });
     if (fetchedScore === null) {
       throw new Error("No scores found");
     }
