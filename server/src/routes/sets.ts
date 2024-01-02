@@ -3,6 +3,9 @@ import * as dotenv from "dotenv";
 import path from "path";
 import { Deta } from "deta";
 import { ISetData } from "../interfaces/interfaces";
+import checkUserSet from "../middlware/checkUserSet";
+import checkUserSetIDParams from "../middlware/checkUserSetIDParams";
+import checkUserSetUsernameParams from "../middlware/checkUserSetUsernameParams";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 // deta setup
@@ -12,7 +15,7 @@ const sets = deta.Base("sets");
 
 const router = express.Router();
 
-router.post("/create", async (req, res) => {
+router.post("/create", checkUserSet, async (req, res) => {
   try {
     const setData: ISetData = req.body as ISetData;
 
@@ -44,7 +47,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.post("/update", async (req, res) => {
+router.post("/update", checkUserSet, async (req, res) => {
   try {
     const setData: ISetData = req.body as ISetData;
 
@@ -76,7 +79,7 @@ router.post("/update", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", checkUserSetIDParams, async (req, res) => {
   try {
     const fetchedSet = await sets.get(req.params.id as string);
     if (fetchedSet != null) {
@@ -93,7 +96,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.get("/getAll/:username", async (req, res) => {
+router.get("/getAll/:username", checkUserSetUsernameParams, async (req, res) => {
   try {
     const username = req.params.username;
     if (username == undefined || username == null || username == "") {
@@ -122,7 +125,7 @@ router.get("/getAll/:username", async (req, res) => {
   }
 });
 
-router.get("/get/:id", async (req, res) => {
+router.get("/get/:id", checkUserSetIDParams, async (req, res) => {
   try {
     const fetchedSet = await sets.get(req.params.id);
     if (fetchedSet == null) {
