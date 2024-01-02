@@ -57,6 +57,17 @@ router.post("/update", checkUserScore, async (req, res) => {
   try {
     const scoreData: IScoreData = req.body as IScoreData;
 
+    if (
+      scoreData.username === "" ||
+      scoreData.set === "" ||
+      req.body.oldkey === "" ||
+      scoreData.score === null ||
+      scoreData.username === undefined ||
+      scoreData.set === undefined ||
+      req.body.oldkey === undefined
+    ) {
+      throw new Error("Invalid Request");
+    }
     if (!(await scores.get(req.body.oldKey))) {
       throw new Error("This score does not exist.");
     }
