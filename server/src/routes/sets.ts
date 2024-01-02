@@ -19,6 +19,21 @@ router.post("/create", checkUserSet, async (req, res) => {
   try {
     const setData: ISetData = req.body as ISetData;
 
+    if (
+      setData.creator === "" ||
+      setData.title === "" ||
+      setData.question === null ||
+      setData.answer === null ||
+      setData.public === null ||
+      setData.creator === undefined ||
+      setData.title === undefined ||
+      setData.question === undefined ||
+      setData.answer === undefined ||
+      setData.public === undefined
+    ) {
+      throw new Error("Invalid Request");
+    }
+
     if (await sets.get(setData.title + setData.creator)) {
       throw new Error("This set exists already. Please use a different title.");
     }
