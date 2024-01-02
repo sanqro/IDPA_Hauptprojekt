@@ -29,9 +29,9 @@ function LoginField() {
 
     const response = await login.json();
     if (await response.success) {
-      localStorage.setItem("user", username);
+      localStorage.setItem("username", username);
       localStorage.setItem("token", response.token);
-      nav("/");
+      location.replace("/");
     } else {
       alert("There was an error: " + response.error);
     }
