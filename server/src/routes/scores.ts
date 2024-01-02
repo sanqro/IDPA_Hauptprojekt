@@ -73,6 +73,11 @@ router.post("/update", checkUserScore, async (req, res) => {
     ) {
       throw new Error("Invalid Request");
     }
+
+    if ((await sets.get(scoreData.set)) == null) {
+      throw new Error("This set does not exist.");
+    }
+
     if (!(await scores.get(req.body.oldKey))) {
       throw new Error("This score does not exist.");
     }
