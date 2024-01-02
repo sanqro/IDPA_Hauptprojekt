@@ -1,5 +1,4 @@
 // Login.tsx
-import React from "react";
 import RegistrationField from "../components/RegistrationField";
 
 const Register = () => {

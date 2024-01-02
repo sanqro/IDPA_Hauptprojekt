@@ -1,4 +1,3 @@
-import React from "react";
 import { IOnClickButton } from "../interfaces/props";
 
 function OnClickButton(props: IOnClickButton) {
