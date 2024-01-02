@@ -19,6 +19,16 @@ router.post("/create", checkUserScore, async (req, res) => {
   try {
     const scoreData: IScoreData = req.body as IScoreData;
 
+    if (
+      scoreData.username === "" ||
+      scoreData.set === "" ||
+      scoreData.score === null ||
+      scoreData.username === undefined ||
+      scoreData.set === undefined ||
+      scoreData.score === undefined
+    ) {
+      throw new Error("Invalid Request");
+    }
     if (await scores.get(scoreData.username + scoreData.set)) {
       throw new Error("This score exists already. Please use a different name.");
     }
