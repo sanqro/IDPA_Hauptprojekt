@@ -10,6 +10,7 @@ export interface ISetData {
   question: string[];
   answer: string[];
   public: boolean;
+  type: string;
 }
 
 export interface IScoreData {
