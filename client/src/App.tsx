@@ -6,6 +6,7 @@ import Navigation from "./components/Navigation.tsx";
 import Login from "./pages/Login.tsx";
 import Cards from "./pages/cards.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import Register from "./pages/Register.tsx";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <div className="flex justify-center align-middle">
           <Routes>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/cards" element={<Cards />} />
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
