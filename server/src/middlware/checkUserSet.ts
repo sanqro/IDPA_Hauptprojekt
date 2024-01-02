@@ -25,6 +25,13 @@ export default async function checkUserSet(req: any, res: any, next: any) {
         });
         return false;
       }
+      if (setsData.username != username) {
+        res.status(401).json({
+          message: "This set does not belong to you!",
+          success: false
+        });
+        return false;
+      }
     }
     if (req.body.creator != username) {
       res.status(401).json({
