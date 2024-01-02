@@ -25,7 +25,8 @@ router.post("/create", async (req, res) => {
       title: setData.title,
       creator: setData.creator,
       question: setData.question,
-      answer: setData.answer
+      answer: setData.answer,
+      public: setData.public
     };
 
     await sets.insert(setDataJson);
@@ -35,6 +36,7 @@ router.post("/create", async (req, res) => {
       creator: setData.creator,
       question: setData.question,
       answer: setData.answer,
+      public: setData.public,
       success: true
     });
   } catch (err) {
@@ -55,7 +57,8 @@ router.post("/update", async (req, res) => {
       title: setData.title,
       creator: setData.creator,
       answer: setData.answer,
-      question: setData.question
+      question: setData.question,
+      public: setData.public
     };
     await sets.delete(req.body.oldKey);
     await sets.insert(setDataJson);
@@ -65,6 +68,7 @@ router.post("/update", async (req, res) => {
       creator: setDataJson.creator,
       question: setDataJson.question,
       answer: setDataJson.answer,
+      public: setDataJson.public,
       success: true
     });
   } catch (err) {
@@ -89,13 +93,30 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.get("/getAll", async (req, res) => {
+router.get("/getAll/:username", async (req, res) => {
   try {
-    const fetchedSets = await sets.fetch();
-    if (fetchedSets === null) {
-      throw new Error("No sets found");
+    const username = req.params.username;
+    if (username == undefined || username == null || username == "") {
+      throw new Error("Invalid username.");
     }
-    res.status(201).json({ fetchedSets });
+    const fetchedSets = await sets.fetch({ creator: username });
+    const fetchedPublicSets: any = await sets.fetch({ public: true });
+
+    console.log(fetchedPublicSets);
+    for (let i = 0; i < fetchedPublicSets.count; i++) {
+      if (!fetchedSets.items.some((item) => item.key === fetchedPublicSets.items[i].key)) {
+        fetchedSets.items.push(fetchedPublicSets.items[i]);
+        fetchedSets.count++;
+      }
+    }
+    if (fetchedSets == null || fetchedPublicSets == null) {
+      res.status(409).json({
+        error: "No sets yet."
+      });
+      return false;
+    } else {
+      res.status(201).json({ fetchedSets });
+    }
   } catch (err) {
     res.status(503).json({ error: err.message });
   }
