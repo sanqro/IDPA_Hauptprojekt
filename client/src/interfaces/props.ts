@@ -77,3 +77,8 @@ export interface IViewVocabularySet {
   terms: string[];
   definitions: string[];
 }
+
+export interface INavigationButton {
+  children: string;
+  destination: string;
+}
