@@ -12,6 +12,7 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const projectKey: string = process.env.DETA_PROJECT_KEY;
 const deta = Deta(projectKey);
 const scores = deta.Base("scores");
+const sets = deta.Base("sets");
 
 const router = express.Router();
 
@@ -28,6 +29,10 @@ router.post("/create", checkUserScore, async (req, res) => {
       scoreData.score === undefined
     ) {
       throw new Error("Invalid Request");
+    }
+
+    if ((await sets.get(scoreData.set)) == null) {
+      throw new Error("This set does not exist.");
     }
     if (await scores.get(scoreData.username + scoreData.set)) {
       throw new Error("This score exists already. Please use a different name.");
