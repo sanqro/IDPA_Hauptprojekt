@@ -3,7 +3,7 @@ import * as dotenv from "dotenv";
 import path from "path";
 import { Deta } from "deta";
 import { ISetData } from "../interfaces/interfaces";
-import checkUserSet from "../middlware/checkUserScore";
+import checkUserSet from "../middlware/checkUserSet";
 import checkUserSetIDParams from "../middlware/checkUserSetIDParams";
 import checkUserSetUsernameParams from "../middlware/checkUserSetUsernameParams";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
@@ -15,7 +15,7 @@ const sets = deta.Base("sets");
 
 const router = express.Router();
 
-router.post("/create", async (req, res) => {
+router.post("/create", checkUserSet, async (req, res) => {
   try {
     const setData: ISetData = req.body as ISetData;
 
