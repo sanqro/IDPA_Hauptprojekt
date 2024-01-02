@@ -66,6 +66,23 @@ router.post("/update", checkUserSet, async (req, res) => {
   try {
     const setData: ISetData = req.body as ISetData;
 
+    if (
+      setData.creator === "" ||
+      setData.title === "" ||
+      setData.question === null ||
+      setData.answer === null ||
+      setData.public === null ||
+      req.body.oldKey === "" ||
+      setData.creator === undefined ||
+      setData.title === undefined ||
+      setData.question === undefined ||
+      setData.answer === undefined ||
+      setData.public === undefined ||
+      req.body.oldKey === undefined
+    ) {
+      throw new Error("Invalid Request");
+    }
+
     if (!(await sets.get(req.body.oldKey))) {
       throw new Error("This set does not exist.");
     }
