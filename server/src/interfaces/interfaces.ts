@@ -18,3 +18,7 @@ export interface IScoreData {
   set: string;
   score: number;
 }
+
+export interface IJWTPayload {
+  username: string;
+}
