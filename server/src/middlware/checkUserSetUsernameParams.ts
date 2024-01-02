@@ -27,7 +27,7 @@ export default async function checkUserSetUsernameParams(req: any, res: any, nex
       return false;
     }
 
-    if (userData.username != username) {
+    if (userData.key != username) {
       res.status(401).json({
         message: "You are not authorized to do this!",
         success: false
