@@ -3,6 +3,9 @@ import * as dotenv from "dotenv";
 import path from "path";
 import { Deta } from "deta";
 import { IScoreData } from "../interfaces/interfaces";
+import checkUserScore from "../middlware/checkUserScore";
+import checkUserScoreIDParams from "../middlware/checkUserScoreIDParams";
+import checkUserSetUsernameParams from "../middlware/checkUserSetUsernameParams";
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 // deta setup
@@ -12,7 +15,7 @@ const scores = deta.Base("scores");
 
 const router = express.Router();
 
-router.post("/create", async (req, res) => {
+router.post("/create", checkUserScore, async (req, res) => {
   try {
     const scoreData: IScoreData = req.body as IScoreData;
 
@@ -40,7 +43,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.post("/update", async (req, res) => {
+router.post("/update", checkUserScore, async (req, res) => {
   try {
     const scoreData: IScoreData = req.body as IScoreData;
 
@@ -69,7 +72,7 @@ router.post("/update", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", checkUserScoreIDParams, async (req, res) => {
   try {
     const fetchedScore = await scores.get(req.params.id as string);
     if (fetchedScore != null) {
@@ -86,7 +89,7 @@ router.delete("/delete/:id", async (req, res) => {
   }
 });
 
-router.get("/get/:username", async (req, res) => {
+router.get("/get/:username", checkUserSetUsernameParams, async (req, res) => {
   try {
     const fetchedScore = await scores.fetch({ username: req.params.username });
     if (fetchedScore === null) {
@@ -98,7 +101,7 @@ router.get("/get/:username", async (req, res) => {
   }
 });
 
-router.get("/get/:id", async (req, res) => {
+router.get("/get/:id", checkUserScoreIDParams, async (req, res) => {
   try {
     const fetchedScore = await scores.get(req.params.id);
     if (fetchedScore == null) {
