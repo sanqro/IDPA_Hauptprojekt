@@ -16,17 +16,27 @@ export default async function checkUserScore(req: any, res: any, next: any) {
     const deta = Deta(projectKey);
     const scores = deta.Base("scores");
     const username: string = (jwtData as IJWTPayload).username;
-    const scoresData = await scores.get(id);
 
-    if (scores == null) {
-      res.status(401).json({
-        message: "This score does not exist!",
-        success: false
-      });
-      return false;
+    if (req.originalUrl != "/scores/create") {
+      const scoresData = await scores.get(id);
+
+      if (scores == null) {
+        res.status(401).json({
+          message: "This score does not exist!",
+          success: false
+        });
+        return false;
+      }
+      if (scoresData.username != username) {
+        res.status(401).json({
+          message: "This score does not belong to you!",
+          success: false
+        });
+        return false;
+      }
     }
 
-    if (scoresData.username != username) {
+    if (req.body.username != username) {
       res.status(401).json({
         message: "This score does not belong to you!",
         success: false
