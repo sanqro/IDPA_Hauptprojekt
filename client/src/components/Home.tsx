@@ -8,12 +8,7 @@ const Homepage = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const username = localStorage.getItem("username") as string;
-    if (
-      username !== null ||
-      token !== null ||
-      username !== undefined ||
-      token !== undefined
-    ) {
+    if (token && username) {
       setUsername(username);
       setIsLoggedIn(true);
     }
