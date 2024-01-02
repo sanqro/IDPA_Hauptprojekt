@@ -3,17 +3,16 @@ import cors from "cors";
 import auth from "./routes/auth";
 import sets from "./routes/sets";
 import scores from "./routes/scores";
+import authState from "./middlware/authState";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.disable("etag");
 
-
 app.use("/auth", auth);
-app.use("/sets", sets);
-app.use("/scores", scores);
-
+app.use("/sets", authState, sets);
+app.use("/scores", authState, scores);
 
 app.get("/", (req, res) =>
   res.status(200).json({
