@@ -14,22 +14,22 @@ export default async function checkUserSet(req: any, res: any, next: any) {
 
     const projectKey: string = process.env.PROJECT_KEY;
     const deta = Deta(projectKey);
-    const scores = deta.Base("scores");
+    const sets = deta.Base("sets");
 
     const username: string = (jwtData as IJWTPayload).username;
-    const scoresData = await scores.get(id);
+    const setsData = await sets.get(id);
 
-    if (scores == null) {
+    if (setsData == null) {
       res.status(401).json({
-        message: "This score does not exist!",
+        message: "This set does not exist!",
         success: false
       });
       return false;
     }
 
-    if (scoresData.username != username) {
+    if (setsData.creator != username) {
       res.status(401).json({
-        message: "This score does not belong to you!",
+        message: "This set does not belong to you!",
         success: false
       });
       return false;

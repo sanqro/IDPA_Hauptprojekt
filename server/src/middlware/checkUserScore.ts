@@ -14,22 +14,21 @@ export default async function checkUserScore(req: any, res: any, next: any) {
 
     const projectKey: string = process.env.PROJECT_KEY;
     const deta = Deta(projectKey);
-    const sets = deta.Base("sets");
-
+    const scores = deta.Base("scores");
     const username: string = (jwtData as IJWTPayload).username;
-    const setsData = await sets.get(id);
+    const scoresData = await scores.get(id);
 
-    if (setsData == null) {
+    if (scores == null) {
       res.status(401).json({
-        message: "This set does not exist!",
+        message: "This score does not exist!",
         success: false
       });
       return false;
     }
 
-    if (setsData.creator != username) {
+    if (scoresData.username != username) {
       res.status(401).json({
-        message: "This set does not belong to you!",
+        message: "This score does not belong to you!",
         success: false
       });
       return false;
