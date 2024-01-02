@@ -78,12 +78,15 @@ router.post("/update", checkUserSet, async (req, res) => {
       setData.answer === null ||
       setData.public === null ||
       req.body.oldKey === "" ||
+      setData.type === "" ||
       setData.creator === undefined ||
       setData.title === undefined ||
       setData.question === undefined ||
       setData.answer === undefined ||
       setData.public === undefined ||
-      req.body.oldKey === undefined
+      req.body.oldKey === undefined ||
+      setData.type === undefined ||
+      (setData.type !== "accounting" && setData.type !== "questions")
     ) {
       throw new Error("Invalid Request");
     }
@@ -98,7 +101,8 @@ router.post("/update", checkUserSet, async (req, res) => {
       creator: setData.creator,
       answer: setData.answer,
       question: setData.question,
-      public: setData.public
+      public: setData.public,
+      type: setData.type
     };
     await sets.delete(req.body.oldKey);
     await sets.insert(setDataJson);
@@ -109,6 +113,7 @@ router.post("/update", checkUserSet, async (req, res) => {
       question: setDataJson.question,
       answer: setDataJson.answer,
       public: setDataJson.public,
+      type: setDataJson.type,
       success: true
     });
   } catch (err) {
