@@ -12,6 +12,7 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const projectKey: string = process.env.DETA_PROJECT_KEY;
 const deta = Deta(projectKey);
 const scores = deta.Base("scores");
+const sets = deta.Base("sets");
 
 const router = express.Router();
 
@@ -19,6 +20,20 @@ router.post("/create", checkUserScore, async (req, res) => {
   try {
     const scoreData: IScoreData = req.body as IScoreData;
 
+    if (
+      scoreData.username === "" ||
+      scoreData.set === "" ||
+      scoreData.score === null ||
+      scoreData.username === undefined ||
+      scoreData.set === undefined ||
+      scoreData.score === undefined
+    ) {
+      throw new Error("Invalid Request");
+    }
+
+    if ((await sets.get(scoreData.set)) == null) {
+      throw new Error("This set does not exist.");
+    }
     if (await scores.get(scoreData.username + scoreData.set)) {
       throw new Error("This score exists already. Please use a different name.");
     }
@@ -46,6 +61,22 @@ router.post("/create", checkUserScore, async (req, res) => {
 router.post("/update", checkUserScore, async (req, res) => {
   try {
     const scoreData: IScoreData = req.body as IScoreData;
+
+    if (
+      scoreData.username === "" ||
+      scoreData.set === "" ||
+      req.body.oldkey === "" ||
+      scoreData.score === null ||
+      scoreData.username === undefined ||
+      scoreData.set === undefined ||
+      req.body.oldkey === undefined
+    ) {
+      throw new Error("Invalid Request");
+    }
+
+    if ((await sets.get(scoreData.set)) == null) {
+      throw new Error("This set does not exist.");
+    }
 
     if (!(await scores.get(req.body.oldKey))) {
       throw new Error("This score does not exist.");
