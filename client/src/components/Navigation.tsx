@@ -8,7 +8,7 @@ const Navigation: React.FC = () => {
           <a href="/">Home</a>
         </li>
         <li className="text-lg font-semibold transition duration-300 hvr-sweep-to-right">
-          <a href="/karten">Karten</a>
+          <a href="/cards">Cards</a>
         </li>
         <li className="text-lg font-semibold transition duration-300 hvr-sweep-to-right">
           <a href="/login">Login</a>
