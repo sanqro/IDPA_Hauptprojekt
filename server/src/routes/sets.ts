@@ -167,6 +167,27 @@ router.get("/getAll/:username", checkUserSetUsernameParams, async (req, res) => 
   }
 });
 
+router.get("/get/:username", checkUserSetUsernameParams, async (req, res) => {
+  try {
+    const username = req.params.username;
+    if (username == undefined || username == null || username == "") {
+      throw new Error("Invalid username.");
+    }
+    const fetchedSets = await sets.fetch({ creator: username });
+
+    if (fetchedSets == null) {
+      res.status(409).json({
+        error: "No sets yet."
+      });
+      return false;
+    } else {
+      res.status(201).json({ fetchedSets });
+    }
+  } catch (err) {
+    res.status(503).json({ error: err.message });
+  }
+});
+
 router.get("/get/:id", checkUserSetIDParams, async (req, res) => {
   try {
     const fetchedSet = await sets.get(req.params.id);
