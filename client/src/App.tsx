@@ -5,6 +5,7 @@ import Login from "./pages/Login.tsx";
 import Cards from "./pages/cards.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Register from "./pages/Register.tsx";
+import AddSet from "./pages/AddSet.tsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/cards" element={<Cards />} />
+            <Route path="/add" element={<AddSet />} />
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
