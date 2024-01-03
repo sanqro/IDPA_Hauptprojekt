@@ -39,3 +39,10 @@ export interface InputField {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+export interface ISmallSetDisplay {
+  label: string;
+  className?: string;
+  set: ISet;
+  onClick: () => void;
+}
