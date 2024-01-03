@@ -23,3 +23,19 @@ export interface IFetchedSets {
   items: ISet[];
   count: number;
 }
+
+export interface ISetData {
+  creator: string;
+  title: string;
+  question: string[];
+  answer: string[];
+  public: boolean;
+  type: string;
+}
+
+export interface InputField {
+  type: string;
+  placeholder?: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
