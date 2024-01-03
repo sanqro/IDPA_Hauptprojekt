@@ -52,6 +52,7 @@ const DeleteSetView = () => {
           set={set}
           onClick={() => handleDelete(set.key)}
           label={"Delete"}
+          className="py-2 px-4 mt-4 text-white bg-red-500 hover:bg-red-600 rounded"
         />
       ))}
     </div>
