@@ -46,3 +46,11 @@ export interface ISmallSetDisplay {
   set: ISet;
   onClick: () => void;
 }
+
+export interface IUpdateView {
+  selectedSet: ISet;
+  handlePairChange: (type: keyof ISet, index: number, value: string) => void;
+  handleChange: (type: keyof ISet, value: string) => void;
+  handleSaveClick: () => void;
+  handleCancelClick: () => void;
+}
