@@ -61,3 +61,7 @@ export interface IAuthContext {
   isLoggedIn: () => boolean;
   handleLogOut: () => void;
 }
+
+export interface IQUizInput {
+  selectedSet: ISet;
+}
