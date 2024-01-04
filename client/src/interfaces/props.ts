@@ -65,3 +65,7 @@ export interface IAuthContext {
 export interface IQUizInput {
   selectedSet: ISet;
 }
+
+export interface IHelpModal {
+  closeModal: () => void;
+}
