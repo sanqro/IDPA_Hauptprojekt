@@ -27,7 +27,7 @@ export default async function checkUserScore(req: any, res: any, next: any) {
         });
         return false;
       }
-      if (scoresData.username != username) {
+      if (req.body.username != username) {
         res.status(401).json({
           message: "This score does not belong to you!",
           success: false

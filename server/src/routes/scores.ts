@@ -35,7 +35,7 @@ router.post("/update", checkUserScore, async (req, res) => {
       throw new Error("This set does not exist.");
     }
 
-    if (!(await scores.get(req.body.username + req.body.set))) {
+    if (await scores.get(req.body.username + req.body.set)) {
       await scores.delete(req.body.username + req.body.set);
     }
 
