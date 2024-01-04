@@ -1,4 +1,3 @@
-import React from "react";
 import UpdateSetView from "../components/Update";
 
 function UpdateSet() {

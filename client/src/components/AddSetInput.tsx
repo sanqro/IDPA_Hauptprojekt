@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { ISetData } from "../interfaces/props"; // Pfad zu Ihrem Interface
 import OnClickButton from "./OnClickButton";
 import InputField from "./InputField";

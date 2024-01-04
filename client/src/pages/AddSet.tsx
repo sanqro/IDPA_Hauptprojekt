@@ -1,4 +1,3 @@
-import React from "react";
 import AddSetInput from "../components/AddSetInput";
 
 function AddSet() {
