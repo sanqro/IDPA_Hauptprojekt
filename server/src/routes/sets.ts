@@ -137,6 +137,7 @@ router.delete("/delete/:id", checkUserSetIDParams, async (req, res) => {
     const fetchedSet = await sets.get(req.params.id as string);
     if (fetchedSet != null) {
       await sets.delete(req.params.id as string);
+      await score.delete((fetchedSet.creator + req.params.id) as string);
       res.status(200).json({ message: "Deleted set", id: req.params.id, sucess: true });
     } else {
       res.status(409).json({
