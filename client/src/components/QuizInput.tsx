@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { SetStateAction, useState } from "react";
 import { IQUizInput } from "../interfaces/props";
 import OnClickButton from "./OnClickButton";
@@ -7,9 +8,10 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [inputValue, setInputValue] = useState("");
   const [quizMode, setQuizMode] = useState("");
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [score, setScore] = useState(0);
 
   const totalQuestions = selectedSet.question.length;
-  const isQuizFinished = currentIndex === totalQuestions - 1;
   const currentQuestion = selectedSet.question[currentIndex];
   const correctAnswer = selectedSet.answer[currentIndex];
 
@@ -17,20 +19,51 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
     target: { value: SetStateAction<string> };
   }) => setInputValue(event.target.value);
 
-  const checkAnswer = () => {
-    console.log(quizMode);
-    if (quizMode === "quiz") {
-      const isCorrect = inputValue === correctAnswer;
-      console.log(isCorrect);
-    }
-    if (!isQuizFinished) {
-      setCurrentIndex(currentIndex + 1);
-      setInputValue("");
-    } else {
-      console.log("quiz finished");
+  const postData = async (score: number) => {
+    try {
+      const response = await fetch("https://api.quiz.sanqro.me/scores/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: localStorage.getItem("token") as string,
+        },
+        body: JSON.stringify({
+          key: localStorage.getItem("username") + selectedSet.key,
+          username: localStorage.getItem("username") as string,
+          set: selectedSet.key,
+          score: score,
+        }),
+      });
+      if (!response.ok) {
+        const data = await response.json();
+        alert(data.error);
+      }
+    } catch (error) {
+      alert("Unknown error occured");
     }
   };
 
+  const checkAnswer = async () => {
+    const isCorrect = inputValue === correctAnswer;
+    let updatedCorrectAnswers = correctAnswers;
+
+    if (quizMode === "quiz" && isCorrect) {
+      updatedCorrectAnswers = correctAnswers + 1;
+      setCorrectAnswers(updatedCorrectAnswers);
+    }
+
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < totalQuestions) {
+      setCurrentIndex(nextIndex);
+      setInputValue("");
+    } else {
+      const finalScore = Math.round(
+        (updatedCorrectAnswers / totalQuestions) * 100
+      );
+      setScore(finalScore);
+      await postData(finalScore);
+    }
+  };
   const toggleMode = (mode: SetStateAction<string>) => {
     setQuizMode(mode);
   };
@@ -67,7 +100,6 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
           <OnClickButton
             onClick={() => {
               setCurrentIndex(currentIndex + 1);
-              checkAnswer();
             }}
             label="Next Flashcard"
             className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mt-2"
