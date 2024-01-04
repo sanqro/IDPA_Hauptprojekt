@@ -15,24 +15,7 @@ export default async function checkUserSet(req: any, res: any, next: any) {
     const sets = deta.Base("sets");
 
     const username: string = (jwtData as IJWTPayload).username;
-    if (req.originalUrl != "/sets/create") {
-      const setsData = await sets.get(id);
 
-      if (setsData == null) {
-        res.status(401).json({
-          message: "This set does not exist!",
-          success: false
-        });
-        return false;
-      }
-      if (setsData.username != username) {
-        res.status(401).json({
-          message: "This set does not belong to you!",
-          success: false
-        });
-        return false;
-      }
-    }
     if (req.body.creator != username) {
       res.status(401).json({
         message: "This set does not belong to you!",
