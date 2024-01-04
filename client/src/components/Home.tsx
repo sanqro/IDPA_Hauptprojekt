@@ -1,22 +1,12 @@
-import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvier";
 
 const Homepage = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const username = localStorage.getItem("username") as string;
-    if (token && username) {
-      setUsername(username);
-      setIsLoggedIn(true);
-    }
-  }, []);
-
+  const { username, isLoggedIn } = useContext(AuthContext);
   return (
     <div>
-      {isLoggedIn ? (
+      {isLoggedIn() ? (
         <div className="text-white">{username} </div>
       ) : (
         <div className="flex justify-center w-80 align-middle mt-52 rounded-3xl bg-slate-500">

@@ -1,39 +1,23 @@
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvier";
 
 const Navigation = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [username, setUsername] = useState("");
   const nav = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const storedUsername = localStorage.getItem("username");
-    if (token && storedUsername) {
-      setUsername(storedUsername);
-      setIsLoggedIn(true);
-    }
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
-    setUsername("");
-    setIsLoggedIn(false);
-    nav("/login");
-  };
+  const { isLoggedIn, username, handleLogOut } = useContext(AuthContext);
 
   return (
     <nav className="bg-gray-800 text-white py-4">
       <div className="flex justify-between items-center px-4">
-        {isLoggedIn && (
+        {isLoggedIn() && (
           <div className="text-lg font-semibold">
             <span>{username}</span>
           </div>
         )}
         <ul
           className={`flex justify-center space-x-4 ${
-            isLoggedIn ? "flex-grow" : ""
+            isLoggedIn() ? "flex-grow" : ""
           }`}
         >
           <li className="text-lg font-semibold">
@@ -42,9 +26,9 @@ const Navigation = () => {
           <li className="text-lg font-semibold">
             <button onClick={() => nav("/cards")}>Cards</button>
           </li>
-          {isLoggedIn ? (
+          {isLoggedIn() ? (
             <li className="text-lg font-semibold transition">
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={handleLogOut}>Logout</button>
             </li>
           ) : (
             <li className="text-lg font-semibold transition">
