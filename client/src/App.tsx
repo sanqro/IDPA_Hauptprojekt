@@ -7,6 +7,7 @@ import NotFound from "./pages/NotFound.tsx";
 import Register from "./pages/Register.tsx";
 import AddSet from "./pages/AddSet.tsx";
 import DeleteSet from "./pages/DeleteSet.tsx";
+import UpdateSet from "./pages/UpdateSet.tsx";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
             <Route path="/cards" element={<Cards />} />
             <Route path="/add" element={<AddSet />} />
             <Route path="/delete" element={<DeleteSet />} />
+            <Route path="/update" element={<UpdateSet />} />
             <Route path="/" element={<Home />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
