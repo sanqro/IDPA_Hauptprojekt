@@ -188,7 +188,7 @@ router.get("/get/:username", checkUserSetUsernameParams, async (req, res) => {
   }
 });
 
-router.get("/get/:id", checkUserSetIDParams, async (req, res) => {
+router.get("/getSet/:id", checkUserSetIDParams, async (req, res) => {
   try {
     const fetchedSet = await sets.get(req.params.id);
     if (fetchedSet == null) {
