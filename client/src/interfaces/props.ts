@@ -54,3 +54,10 @@ export interface IUpdateView {
   handleSaveClick: () => void;
   handleCancelClick: () => void;
 }
+
+export interface IAuthContext {
+  token: string | null;
+  username: string | null;
+  isLoggedIn: () => boolean;
+  handleLogOut: () => void;
+}
