@@ -16,7 +16,7 @@ const sets = deta.Base("sets");
 
 const router = express.Router();
 
-router.post("/create", checkUserScore, async (req, res) => {
+router.post("/update", checkUserScore, async (req, res) => {
   try {
     const scoreData: IScoreData = req.body as IScoreData;
 
@@ -34,8 +34,9 @@ router.post("/create", checkUserScore, async (req, res) => {
     if ((await sets.get(scoreData.set)) == null) {
       throw new Error("This set does not exist.");
     }
-    if (await scores.get(scoreData.username + scoreData.set)) {
-      throw new Error("This score exists already. Please use a different name.");
+
+    if (!(await scores.get(req.body.username + req.body.set))) {
+      await scores.delete(req.body.username + req.body.set);
     }
 
     const scoreDataJson = {
@@ -45,51 +46,6 @@ router.post("/create", checkUserScore, async (req, res) => {
       score: scoreData.score
     };
 
-    await scores.insert(scoreDataJson);
-
-    res.status(201).json({
-      username: scoreData.username,
-      set: scoreData.set,
-      score: scoreData.score,
-      success: true
-    });
-  } catch (err) {
-    res.status(503).json({ error: err.message });
-  }
-});
-
-router.post("/update", checkUserScore, async (req, res) => {
-  try {
-    const scoreData: IScoreData = req.body as IScoreData;
-
-    if (
-      scoreData.username === "" ||
-      scoreData.set === "" ||
-      req.body.oldkey === "" ||
-      scoreData.score === null ||
-      scoreData.username === undefined ||
-      scoreData.set === undefined ||
-      req.body.oldkey === undefined
-    ) {
-      throw new Error("Invalid Request");
-    }
-
-    if ((await sets.get(scoreData.set)) == null) {
-      throw new Error("This set does not exist.");
-    }
-
-    if (!(await scores.get(req.body.oldKey))) {
-      throw new Error("This score does not exist.");
-    }
-
-    const scoreDataJson = {
-      key: scoreData.username + scoreData.set,
-      username: scoreData.username,
-      set: scoreData.set,
-      score: scoreData.score
-    };
-
-    await scores.delete(req.body.oldKey);
     await scores.insert(scoreDataJson);
 
     res.status(201).json({
