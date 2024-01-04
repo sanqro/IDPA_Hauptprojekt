@@ -12,6 +12,7 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 const projectKey: string = process.env.DETA_PROJECT_KEY;
 const deta = Deta(projectKey);
 const sets = deta.Base("sets");
+const score = deta.Base("scores");
 
 const router = express.Router();
 
@@ -104,6 +105,16 @@ router.post("/update", checkUserSet, async (req, res) => {
       public: setData.public,
       type: setData.type
     };
+
+    if ((await score.get(req.body.creator + req.body.oldKey)) !== null) {
+      await score.delete(req.body.creator + req.body.oldKey);
+      await score.insert({
+        key: req.body.creator + setData.title + setData.creator,
+        username: req.body.creator,
+        set: setData.title + setData.creator,
+        score: 0
+      });
+    }
     await sets.delete(req.body.oldKey);
     await sets.insert(setDataJson);
 
