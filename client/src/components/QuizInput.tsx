@@ -3,6 +3,7 @@ import { SetStateAction, useState } from "react";
 import { IQUizInput } from "../interfaces/props";
 import OnClickButton from "./OnClickButton";
 import InputField from "./InputField";
+import { useNavigate } from "react-router-dom";
 
 const QuizStartedView = ({ selectedSet }: IQUizInput) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -10,10 +11,13 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
   const [quizMode, setQuizMode] = useState("");
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [score, setScore] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
 
   const totalQuestions = selectedSet.question.length;
   const currentQuestion = selectedSet.question[currentIndex];
   const correctAnswer = selectedSet.answer[currentIndex];
+
+  const nav = useNavigate();
 
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
@@ -43,6 +47,15 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
     }
   };
 
+  const nextFlashcard = () => {
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < totalQuestions) {
+      setCurrentIndex(nextIndex);
+    } else {
+      setIsFinished(true);
+    }
+  };
+
   const checkAnswer = async () => {
     const isCorrect = inputValue === correctAnswer;
     let updatedCorrectAnswers = correctAnswers;
@@ -62,6 +75,7 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
       );
       setScore(finalScore);
       await postData(finalScore);
+      setIsFinished(true);
     }
   };
   const toggleMode = (mode: SetStateAction<string>) => {
@@ -85,6 +99,28 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
     );
   }
 
+  if (isFinished) {
+    return (
+      <div className="p-4">
+        {quizMode === "quiz" && (
+          <p className="text-2xl text-white font-semibold">
+            Your score is {score}%
+          </p>
+        )}
+        {quizMode === "flashcard" && (
+          <p className="text-2xl text-white font-semibold">
+            There is no score in flashcard mode!
+          </p>
+        )}
+        <OnClickButton
+          onClick={() => nav("/")}
+          label="Go home"
+          className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-2"
+        />
+      </div>
+    );
+  }
+
   if (quizMode === "flashcard") {
     return (
       <div className="p-4 max-w-md mx-auto bg-white rounded-lg">
@@ -99,7 +135,7 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
           />
           <OnClickButton
             onClick={() => {
-              setCurrentIndex(currentIndex + 1);
+              nextFlashcard();
             }}
             label="Next Flashcard"
             className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mt-2"
