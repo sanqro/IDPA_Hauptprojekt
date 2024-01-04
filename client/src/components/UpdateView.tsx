@@ -39,7 +39,7 @@ const EditVocabSetForm = ({
         {publicToggle ? "Public" : "Private"}
       </button>
 
-      {selectedSet.answer.map((answer, index) => (
+      {selectedSet.answer.map((_answer, index) => (
         <div key={index} className="flex space-x-4 mt-4">
           <InputField
             type="text"
