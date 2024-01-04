@@ -9,6 +9,7 @@ import AddSet from "./pages/AddSet.tsx";
 import DeleteSet from "./pages/DeleteSet.tsx";
 import UpdateSet from "./pages/UpdateSet.tsx";
 import AuthProvider from "./contexts/AuthProvier.tsx";
+import ProtectedRoutes from "./components/ProtectedRoutes.tsx";
 
 function App() {
   return (
@@ -20,10 +21,12 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/cards" element={<Cards />} />
-              <Route path="/add" element={<AddSet />} />
-              <Route path="/delete" element={<DeleteSet />} />
-              <Route path="/update" element={<UpdateSet />} />
+              <Route element={<ProtectedRoutes />}>
+                <Route path="/cards" element={<Cards />} />
+                <Route path="/add" element={<AddSet />} />
+                <Route path="/delete" element={<DeleteSet />} />
+                <Route path="/update" element={<UpdateSet />} />
+              </Route>
               <Route path="/" element={<Home />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
