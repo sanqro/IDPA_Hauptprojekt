@@ -3,7 +3,7 @@ import { IUpdateView } from "../interfaces/props";
 import InputField from "./InputField";
 import OnClickButton from "./OnClickButton";
 
-const EditVocabSetForm = ({
+const UpdateSetView = ({
   selectedSet,
   handlePairChange,
   handleSaveClick,
@@ -73,4 +73,4 @@ const EditVocabSetForm = ({
   );
 };
 
-export default EditVocabSetForm;
+export default UpdateSetView;

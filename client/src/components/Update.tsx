@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { ISet } from "../interfaces/props";
 import SmallSetDisplay from "./SmallSetDisplay";
-import UpdateView from "./UpdateView";
+import UpdateView from "./UpdateSetView";
 
 const Update = () => {
   const [set, setSet] = useState<ISet[]>([]);
