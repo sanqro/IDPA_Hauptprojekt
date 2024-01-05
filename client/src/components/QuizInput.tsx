@@ -4,6 +4,7 @@ import { IQUizInput } from "../interfaces/props";
 import OnClickButton from "./OnClickButton";
 import InputField from "./InputField";
 import { useNavigate } from "react-router-dom";
+import HelpModal from "./HelpModal";
 
 const QuizStartedView = ({ selectedSet }: IQUizInput) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -12,6 +13,7 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [score, setScore] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
+  const [showHelpModal, setShowHelpModal] = useState(false);
 
   const totalQuestions = selectedSet.question.length;
   const currentQuestion = selectedSet.question[currentIndex];
@@ -22,6 +24,15 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
   const handleInputChange = (event: {
     target: { value: SetStateAction<string> };
   }) => setInputValue(event.target.value);
+
+  const closeModal = () => {
+    console.log("close");
+    setShowHelpModal(false);
+  };
+
+  const openModal = () => {
+    setShowHelpModal(true);
+  };
 
   const postData = async (score: number) => {
     try {
@@ -166,8 +177,16 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
       <OnClickButton
         onClick={checkAnswer}
         label="Check"
-        className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded mt-2"
+        className="bg-blue-500 hover:bg-blue-600 mr-4 text-white py-2 px-4 rounded mt-2"
       />
+      {selectedSet.type == "accounting" && (
+        <OnClickButton
+          onClick={openModal}
+          label="Help"
+          className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded mt-2"
+        />
+      )}
+      {showHelpModal && <HelpModal closeModal={closeModal} />}
     </div>
   );
 };
