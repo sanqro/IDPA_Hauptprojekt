@@ -79,6 +79,14 @@ router.delete("/delete/:id", checkUserScoreIDParams, async (req, res) => {
 router.get("/get/:username", checkUserSetUsernameParams, async (req, res) => {
   try {
     const fetchedScore = await scores.fetch({ username: req.params.username });
+
+    for (let i = 0; i < fetchedScore.count; i++) {
+      const set = await sets.get(fetchedScore.items[i].set as string);
+      const setNameInScore: string = fetchedScore.items[i].set as string;
+      const setNameWithoutUsername = setNameInScore.replace(set.creator as string, "");
+      fetchedScore.items[i].set;
+      fetchedScore.items[i].set = setNameWithoutUsername;
+    }
     if (fetchedScore === null) {
       throw new Error("No scores found");
     }
