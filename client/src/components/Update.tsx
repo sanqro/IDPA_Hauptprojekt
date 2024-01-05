@@ -89,6 +89,7 @@ const Update = () => {
             key={set.key}
             set={set}
             onClick={() => handleEditClick(set.key)}
+            className="py-2 px-4 mt-4 text-white bg-blue-500 hover:bg-blue-600 rounded"
             label={"Edit"}
           />
         ))}
