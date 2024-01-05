@@ -26,6 +26,9 @@ const Update = () => {
     fetchSets();
   }, []);
 
+  if (set.length === 0)
+    return <div className="text-center text-white text-lg">No sets found!</div>;
+
   const handleEditClick = async (id: string) => {
     const response = await fetch(
       `https://api.quiz.sanqro.me/sets/getSet/${id}`,
