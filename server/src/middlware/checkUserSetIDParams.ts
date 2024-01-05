@@ -28,11 +28,13 @@ export default async function checkUserSetIDParams(req: any, res: any, next: any
     }
 
     if (setsData.creator != username) {
-      res.status(401).json({
-        message: "This set does not belong to you!",
-        success: false
-      });
-      return false;
+      if (setsData.public == false) {
+        res.status(401).json({
+          message: "This set does not belong to you!",
+          success: false
+        });
+        return false;
+      }
     }
 
     next();
