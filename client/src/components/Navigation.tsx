@@ -9,10 +9,10 @@ const Navigation = () => {
 
   return (
     <nav className="bg-gray-800 text-white py-4">
-      <div className="flex justify-between items-center px-4">
+      <div className="flex flex-row justify-between items-center px-4">
         {isLoggedIn() && (
           <div className="text-lg font-semibold">
-            <span>{username}</span>
+            <button onClick={() => nav("/scores")}>{username}</button>
           </div>
         )}
         <ul
@@ -20,16 +20,39 @@ const Navigation = () => {
             isLoggedIn() ? "flex-grow" : ""
           }`}
         >
-          <li className="text-lg font-semibold">
-            <button onClick={() => nav("/")}>Home</button>
-          </li>
-          <li className="text-lg font-semibold">
-            <button onClick={() => nav("/cards")}>Cards</button>
-          </li>
+          <button className="text-lg font-semibold" onClick={() => nav("/")}>
+            Home
+          </button>
           {isLoggedIn() ? (
-            <li className="text-lg font-semibold transition">
-              <button onClick={handleLogOut}>Logout</button>
-            </li>
+            <>
+              <button
+                className="text-lg font-semibold"
+                onClick={() => nav("/add")}
+              >
+                Add set
+              </button>
+              <button
+                className="text-lg font-semibold"
+                onClick={() => nav("/delete")}
+              >
+                Delete Set
+              </button>
+              <button
+                className="text-lg font-semibold"
+                onClick={() => nav("/update")}
+              >
+                Update Set
+              </button>
+              <button
+                className="text-lg font-semibold"
+                onClick={() => nav("/quiz")}
+              >
+                Quiz
+              </button>
+              <button className="text-lg font-semibold" onClick={handleLogOut}>
+                Logout
+              </button>
+            </>
           ) : (
             <li className="text-lg font-semibold transition">
               <button onClick={() => nav("/login")}>Login</button>
