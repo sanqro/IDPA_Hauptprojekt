@@ -72,3 +72,7 @@ export interface IQUizInput {
 export interface IHelpModal {
   closeModal: () => void;
 }
+
+export interface IQuizInput {
+  selectedSet: ISet;
+}
