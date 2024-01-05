@@ -10,27 +10,31 @@ export interface INavigationButton {
 }
 
 export interface ISet {
-  answer: string[];
+  key: string; // username of creator + set key
   creator: string;
-  key: string;
-  public: boolean;
-  question: string[];
   title: string;
+  question: IQuestionItem[];
+  public: boolean;
   type: string;
+}
+
+export interface IQuestionItem {
+  question: string;
+  questionType: QuestionType;
+  options?: string[];
+  correctAnswer: string | boolean;
+  userResponse?: string | boolean;
+}
+
+export enum QuestionType {
+  MultipleChoice = "multipleChoice",
+  TrueFalse = "trueFalse",
+  TextInput = "textInput",
 }
 
 export interface IFetchedSets {
   items: ISet[];
   count: number;
-}
-
-export interface ISetData {
-  creator: string;
-  title: string;
-  question: string[];
-  answer: string[];
-  public: boolean;
-  type: string;
 }
 
 export interface InputField {
@@ -49,7 +53,6 @@ export interface ISmallSetDisplay {
 
 export interface IUpdateView {
   selectedSet: ISet;
-  handlePairChange: (type: keyof ISet, index: number, value: string) => void;
   handleChange: (type: keyof ISet, value: string) => void;
   handleSaveClick: () => void;
   handleCancelClick: () => void;
