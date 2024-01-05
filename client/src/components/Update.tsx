@@ -7,7 +7,6 @@ import UpdateView from "./UpdateSetView";
 const Update = () => {
   const [set, setSet] = useState<ISet[]>([]);
   const [selectedSet, setSelectedSet] = useState<ISet | null>(null);
-
   useEffect(() => {
     const fetchSets = async () => {
       const user = localStorage.getItem("username");
@@ -44,7 +43,6 @@ const Update = () => {
 
   const handleSaveClick = async () => {
     if (!selectedSet) return;
-
     const oldKey = selectedSet.key;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { key, ...newSetData } = selectedSet;
@@ -72,14 +70,6 @@ const Update = () => {
     }
   };
 
-  const handlePairChange = (type: keyof ISet, index: number, value: string) => {
-    if (selectedSet) {
-      const updatedSet: ISet = { ...selectedSet };
-      (updatedSet[type] as string[])[index] = value;
-      setSelectedSet(updatedSet);
-    }
-  };
-
   const handleChange = (type: keyof ISet, value: string) => {
     if (selectedSet && typeof selectedSet[type] === "string") {
       const updatedSet: ISet = { ...selectedSet };
@@ -102,7 +92,6 @@ const Update = () => {
       {selectedSet && (
         <UpdateView
           selectedSet={selectedSet}
-          handlePairChange={handlePairChange}
           handleSaveClick={handleSaveClick}
           handleChange={handleChange}
           handleCancelClick={() => setSelectedSet(null)}
