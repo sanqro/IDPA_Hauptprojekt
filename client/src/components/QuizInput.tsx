@@ -1,14 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { SetStateAction, useState } from "react";
-import { IQUizInput } from "../interfaces/props";
+import React, { SetStateAction, useState } from "react";
+import { IQuizInput, IQuestionItem, QuestionType } from "../interfaces/props";
 import OnClickButton from "./OnClickButton";
 import InputField from "./InputField";
 import { useNavigate } from "react-router-dom";
 import HelpModal from "./HelpModal";
 
-const QuizStartedView = ({ selectedSet }: IQUizInput) => {
+const QuizStartedView = ({ selectedSet }: IQuizInput) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string | boolean>("");
   const [quizMode, setQuizMode] = useState("");
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [score, setScore] = useState(0);
@@ -16,17 +15,20 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
   const [showHelpModal, setShowHelpModal] = useState(false);
 
   const totalQuestions = selectedSet.question.length;
-  const currentQuestion = selectedSet.question[currentIndex];
-  const correctAnswer = selectedSet.answer[currentIndex];
+  const currentQuestion: IQuestionItem = selectedSet.question[currentIndex];
+  const correctAnswer = currentQuestion.correctAnswer;
 
   const nav = useNavigate();
 
-  const handleInputChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => setInputValue(event.target.value);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value === "true");
+  };
 
   const closeModal = () => {
-    console.log("close");
     setShowHelpModal(false);
   };
 
@@ -68,9 +70,32 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
   };
 
   const checkAnswer = async () => {
-    const isCorrect = inputValue === correctAnswer;
-    let updatedCorrectAnswers = correctAnswers;
+    let isCorrect = false;
 
+    switch (currentQuestion.questionType) {
+      case QuestionType.TextInput:
+        isCorrect = inputValue === correctAnswer;
+        break;
+
+      case QuestionType.TrueFalse:
+        if (
+          typeof correctAnswer === "boolean" &&
+          typeof inputValue === "boolean"
+        ) {
+          isCorrect = inputValue === correctAnswer;
+        }
+        break;
+
+      case QuestionType.MultipleChoice:
+        isCorrect = inputValue === correctAnswer;
+        break;
+
+      default:
+        console.error("Unknown Error occured:", currentQuestion.questionType);
+        break;
+    }
+
+    let updatedCorrectAnswers = correctAnswers;
     if (quizMode === "quiz" && isCorrect) {
       updatedCorrectAnswers = correctAnswers + 1;
       setCorrectAnswers(updatedCorrectAnswers);
@@ -89,6 +114,7 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
       setIsFinished(true);
     }
   };
+
   const toggleMode = (mode: SetStateAction<string>) => {
     setQuizMode(mode);
   };
@@ -136,7 +162,7 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
     return (
       <div className="p-4 max-w-md mx-auto bg-white rounded-lg">
         <p className="text-lg font-semibold mb-3 text-gray-700">
-          {inputValue ? correctAnswer : currentQuestion}
+          {inputValue ? correctAnswer : currentQuestion.question}
         </p>
         <div className="flex justify-between items-center">
           <OnClickButton
@@ -160,7 +186,7 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
     <div className="p-4">
       <p className="text-2xl text-white font-semibold">{selectedSet.title}</p>
       <p className="text-lg text-white font-semibold">
-        Question: {currentQuestion}
+        Question: {currentQuestion.question}
       </p>
       <span className="text-sm text-white">
         Question {currentIndex + 1} of {totalQuestions}
@@ -168,18 +194,66 @@ const QuizStartedView = ({ selectedSet }: IQUizInput) => {
       <p className="text-sm text-white">
         {totalQuestions - currentIndex} questions remaining
       </p>
-      <InputField
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        placeholder="Enter the answer"
-      />
+
+      {currentQuestion.questionType === QuestionType.TextInput && (
+        <InputField
+          type="text"
+          value={inputValue as string}
+          onChange={handleInputChange}
+          placeholder="Enter the answer"
+        />
+      )}
+
+      {currentQuestion.questionType === QuestionType.TrueFalse && (
+        <div className="flex flex-col">
+          <label className="text-white">
+            <input
+              type="radio"
+              name="trueFalse"
+              value="true"
+              className="form-radio h-5 w-5 mr-3"
+              checked={inputValue === true}
+              onChange={handleOptionChange}
+            />
+            True
+          </label>
+          <label className="text-white">
+            <input
+              type="radio"
+              name="trueFalse"
+              value="false"
+              className="form-radio h-5 w-5 mr-3"
+              checked={inputValue === false}
+              onChange={handleOptionChange}
+            />
+            False
+          </label>
+        </div>
+      )}
+      {currentQuestion.questionType === QuestionType.MultipleChoice &&
+        currentQuestion.options?.map((option, index) => (
+          <div key={index}>
+            <label className="text-white">
+              <input
+                type="radio"
+                name="multipleChoice"
+                value={option}
+                className="form-radio h-5 w-5 mr-3"
+                checked={inputValue === option}
+                onChange={handleInputChange}
+              />
+              {option}
+            </label>
+          </div>
+        ))}
+
       <OnClickButton
         onClick={checkAnswer}
         label="Check"
         className="bg-blue-500 hover:bg-blue-600 mr-4 text-white py-2 px-4 rounded mt-2"
       />
-      {selectedSet.type == "accounting" && (
+
+      {selectedSet.type === "accounting" && (
         <OnClickButton
           onClick={openModal}
           label="Help"
