@@ -1,0 +1,163 @@
+{
+  "1 Aktiven": [
+    [
+      "100 Flüssige Mittel und Wertschriften",
+      "1000 Kasse",
+      "1010 Post",
+      "1020 Bank (Kontokorrent)",
+      "1060 Wertschriften (kurzfristig realisierbar)"
+    ],
+    [
+      "110 Forderungen",
+      "1100 Forderungen aus Lieferungen und Leistungen (FLL, Debitoren)",
+      "1109 Delkredere",
+      "1110 Übrige Debitoren",
+      "1170 Vorsteuer MWST",
+      "1176 Verrechnungssteuer"
+    ],
+    [
+      "120 Vorräte",
+      "1200 Warenbestand (Handelswaren)",
+      "1210 Vorräte Rohstoffe (Rohmaterial)",
+      "1260 Vorräte Fertigfabrikate"
+    ],
+    ["130 Aktive Rechnungsabgrenzung", "1300 Aktive Rechnungsabgrenzung (ARA)"]
+  ],
+  "2 Passiven": [
+    [
+      "20 Fremdkapital kurzfristig",
+      "2000 Verbindlichkeiten aus Lieferungen und Leistungen (VLL, Kreditoren)",
+      "2100 Bankverbindlichkeiten (Kontokorrent)",
+      "2200 Geschuldete MWST (Umsatzsteuer)",
+      "2206 Verrechnungssteuer",
+      "2208 Direkte Steuern",
+      "2210 Sonstige kurzfristige Verbindlichkeiten",
+      "2261 Beschlossene Ausschüttungen (Dividenden)",
+      "2270 Sozialversicherungen und Vorsorgeeinrichtungen",
+      "2300 Passive Rechnungsabgrenzung (PRA)",
+      "2330 Rückstellungen (kurzfristig)"
+    ],
+    [
+      "24 Fremdkapital langfristig",
+      "2400 Bankverbindlichkeiten (Bankdarlehen)",
+      "2430 Obligationenanleihen",
+      "2451 Hypotheken",
+      "2500 Darlehen",
+      "2600 Rückstellungen (langfristig)"
+    ]
+  ],
+  "3 Betriebsertrag aus Lieferungen oder Leistungen": [
+    [
+      "",
+      "3000 Produktionserlös",
+      "3080 Bestandesänderung Halb- und Fertigfabrikate",
+      "3200 Warenertrag (Handelserlös)",
+      "3270 Ertrag Eigenverbrauch",
+      "3400 Dienstleistungsertrag",
+      "3600 Übriger Betriebsertrag",
+      "3800 Verluste aus Forderungen (Debitorenverluste)"
+    ]
+  ],
+  "4 Aufwand für Material, Waren und Drittleistungen": [
+    [
+      "",
+      "4000 Materialaufwand (Produktion)",
+      "4200 Warenaufwand (Handelswarenaufwand)",
+      "4400 Aufwand für bezogene Dienstleistungen"
+    ]
+  ],
+  "5 Personalaufwand": [
+    [
+      "",
+      "5000 Lohnaufwand",
+      "5070 Sozialversicherungen",
+      "5670 Übriger Personalaufwand"
+    ]
+  ],
+  "6 Übriger betrieblicher Aufwand, Finanzergebnis": [
+    [
+      "",
+      "6000 Raumaufwand, Mietaufwand",
+      "6100 Unterhalt und Reparaturen",
+      "6200 Versicherungen",
+      "6300 Sachversicherungen, Abgaben, Gebühren",
+      "6400 Energie- und Entsorgungsaufwand",
+      "6500 Verwaltungs- und Informationaufwand",
+      "6600 Werbeaufwand",
+      "6700 sonstiger betrieblicher Aufwand",
+      "6800 Abschreibungen (Werverlust Anlagevermögen)",
+      "6900 Finanzaufwand, Zinsaufwand",
+      "6950 Finanzertrag, Zinsertrag"
+    ]
+  ],
+  "7 Betriebliche Nebenerfolge": [
+    [
+      "740 Wertschriften- und Beteiligungserfolg",
+      "7400 Wertschriftenertrag",
+      "7410 Wertschriftenaufwand",
+      "7450 Beteiligungsertrag",
+      "7460 Beteiligungsaufwand"
+    ],
+    [
+      "750 Liegenschaftenerfolg",
+      "7500 Ertrag betriebliche Liegenschaften (Liegenschaftenetrag)",
+      "7510 Aufwand betriebliche Liegenschaften (Liegenschaftenaufwand)"
+    ]
+  ],
+  "8 Betriebsfremder und ausserordentlicher Erfolg": [
+    [
+      "800 Betriebsfremder Erfolg",
+      "8000 Betriebsfremder Aufwand",
+      "8100 Betriebsfremder Ertrag"
+    ],
+    [
+      "850 Ausserordentlicher Erfolg",
+      "8500 Ausserordentlicher Aufwand (inklusive Verluste aus Verässerung Anlagevermögen)",
+      "8510 Ausserordentlicher Ertrag (inklusive Gewinne aus Veräusserung Anlagevermögen)"
+    ],
+    ["89 Steuern", "8900 Direkte Steuern"]
+  ],
+  "9 Abschluss": [["9200 Jahresgewinn oder Jahresverlust"]],
+  "14 Anlagevermögen": [
+    [
+      "140 Finanzanlagen und Beteiligungen",
+      "1420 Beteiligungen",
+      "1440 Aktivdarlehen"
+    ],
+    [
+      "150 Mobile Sachanlagen",
+      "1500 Maschinen/Apparate",
+      "1509 WB Maschinen/Apparate",
+      "1510 Mobilien/Einrichtungen",
+      "1519 WB Mobilien/Einrichtungen",
+      "1530 Fahrzeuge",
+      "1539 WB Fahrzeuge"
+    ],
+    [
+      "160 Immobile Sachanlagen",
+      "1600 Liegenschaften (Immobilien)",
+      "1609 WB Liegenschaften (WB Immobilien)"
+    ],
+    ["170 Immaterielle Anlagen", "1700 Patente, Know how, Lizenzen"],
+    [
+      "180 Nicht einbezahltes Grund- oder Gesellschaftskapital",
+      "1850 Nicht einbezahltes Aktienkapital"
+    ]
+  ],
+  "28 Eigenkapital": [
+    [
+      "280 Eigenkapital - Aktiengesellschaft",
+      "2800 Aktienkapital",
+      "2900 Gesetzliche Reserven",
+      "2960 Freiwillige Reserven",
+      "2970 Gewinnvortrag/Verlustvortrag",
+      "2979 Jahresgewinn oder Jahresverlust"
+    ],
+    [
+      "280 Eigenkapital - Einzelunternehmung",
+      "2810 Eigenkapital",
+      "2850 Privat",
+      "2891 Jahresgewinn oder Jahresverlust"
+    ]
+  ]
+}
