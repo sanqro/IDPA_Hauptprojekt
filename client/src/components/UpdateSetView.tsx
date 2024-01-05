@@ -24,11 +24,16 @@ const UpdateSetView = ({
     if (field.startsWith("options")) {
       const optionIndex = parseInt(field.split("[")[1].split("]")[0]);
       const newOptions = [...(updatedQuestions[index].options || [])];
+      const oldOptionValue = newOptions[optionIndex];
       newOptions[optionIndex] = value as string;
       updatedQuestions[index] = {
         ...updatedQuestions[index],
         options: newOptions,
       };
+
+      if (updatedQuestions[index].correctAnswer === oldOptionValue) {
+        updatedQuestions[index].correctAnswer = value;
+      }
     } else {
       updatedQuestions[index] = { ...updatedQuestions[index], [field]: value };
     }
@@ -39,6 +44,32 @@ const UpdateSetView = ({
     if (questionItem.questionType === QuestionType.MultipleChoice) {
       return (
         <div>
+          <div key={index} className="my-4">
+            <p className="font-semibold text-white">Question Type:</p>
+            <select
+              className="block px-4 py-2 bg-white border border-gray-300 rounded-md"
+              value={questionItem.questionType}
+              onChange={(e) =>
+                handleQuestionChange(index, "questionType", e.target.value)
+              }
+            >
+              <option value={QuestionType.TextInput}>Text Input</option>
+              <option value={QuestionType.MultipleChoice}>
+                Multiple Choice
+              </option>
+              <option value={QuestionType.TrueFalse}>True/False</option>
+            </select>
+
+            <p className="mt-2 font-semibold text-white">Question:</p>
+            <InputField
+              type="text"
+              placeholder="Question"
+              value={questionItem.question}
+              onChange={(e) =>
+                handleQuestionChange(index, "question", e.target.value)
+              }
+            />
+          </div>
           {Array.from({ length: 4 }).map((_, optionIndex) => (
             <InputField
               key={optionIndex}
