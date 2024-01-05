@@ -76,3 +76,15 @@ export interface IHelpModal {
 export interface IQuizInput {
   selectedSet: ISet;
 }
+
+export interface IFetchedScores {
+  items: IScore[];
+  count: number;
+}
+
+export interface IScore {
+  key: string;
+  username: string;
+  set: string;
+  score: number;
+}
