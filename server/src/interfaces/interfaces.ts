@@ -15,6 +15,7 @@ export interface ISetData {
 export interface IQuestionItem {
   questionType: QuestionType;
   options?: string[];
+  question: string;
   correctAnswer: string | boolean;
   userResponse?: string | boolean;
 }
@@ -24,6 +25,7 @@ enum QuestionType {
   TrueFalse = "trueFalse",
   TextInput = "textInput"
 }
+
 export interface IScoreData {
   key: string; // username + set key
   username: string;
