@@ -25,12 +25,10 @@ router.post("/create", checkUserSet, async (req, res) => {
       setData.title === "" ||
       setData.type === "" ||
       setData.question === null ||
-      setData.answer === null ||
       setData.public === null ||
       setData.creator === undefined ||
       setData.title === undefined ||
       setData.question === undefined ||
-      setData.answer === undefined ||
       setData.public === undefined ||
       setData.type === undefined ||
       (setData.type !== "accounting" && setData.type !== "questions")
@@ -47,18 +45,16 @@ router.post("/create", checkUserSet, async (req, res) => {
       title: setData.title,
       creator: setData.creator,
       question: setData.question,
-      answer: setData.answer,
       public: setData.public,
       type: setData.type
     };
 
-    await sets.insert(setDataJson);
+    await sets.insert(JSON.parse(JSON.stringify(setDataJson)));
 
     res.status(201).json({
       title: setData.title,
       creator: setData.creator,
       question: setData.question,
-      answer: setData.answer,
       public: setData.public,
       type: setData.type,
       success: true
@@ -76,14 +72,12 @@ router.post("/update", checkUserSet, async (req, res) => {
       setData.creator === "" ||
       setData.title === "" ||
       setData.question === null ||
-      setData.answer === null ||
       setData.public === null ||
       req.body.oldKey === "" ||
       setData.type === "" ||
       setData.creator === undefined ||
       setData.title === undefined ||
       setData.question === undefined ||
-      setData.answer === undefined ||
       setData.public === undefined ||
       req.body.oldKey === undefined ||
       setData.type === undefined ||
@@ -100,7 +94,6 @@ router.post("/update", checkUserSet, async (req, res) => {
       key: setData.title + setData.creator,
       title: setData.title,
       creator: setData.creator,
-      answer: setData.answer,
       question: setData.question,
       public: setData.public,
       type: setData.type
@@ -116,13 +109,12 @@ router.post("/update", checkUserSet, async (req, res) => {
       });
     }
     await sets.delete(req.body.oldKey);
-    await sets.insert(setDataJson);
+    await sets.insert(JSON.parse(JSON.stringify(setDataJson)));
 
     res.status(201).json({
       title: setDataJson.title,
       creator: setDataJson.creator,
       question: setDataJson.question,
-      answer: setDataJson.answer,
       public: setDataJson.public,
       type: setDataJson.type,
       success: true
