@@ -156,7 +156,7 @@ const AddSetInput = () => {
             <h3 className="font-semibold mt-2 text-white">Correct answer</h3>
             <select
               value={pair.correctAnswer as string}
-              className="block w-full px-4 py-2 mt-3 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+              className="block w-full px-4 py-2 mt-3 bg-white border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
               onChange={(e) => handleCorrectAnswerChange(index, e.target.value)}
             >
               {pair.options?.map((option, optionIndex) => (
@@ -182,7 +182,7 @@ const AddSetInput = () => {
           <div>
             <select
               value={String(pair.correctAnswer)}
-              className="block w-full px-4 py-2 mt-3 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+              className="block w-full px-4 py-2 mt-3 bg-white border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
               onChange={(e) =>
                 handleChange(index, "correctAnswer", e.target.value === "true")
               }
@@ -218,7 +218,7 @@ const AddSetInput = () => {
       <h3 className="font-semibold mt-2 text-white">Visbility of set:</h3>
       <button
         onClick={() => setPublicToggle(!publicToggle)}
-        className={`px-4 py-2 text-sm font-semibold mt-2 text-white rounded-md transition-colors ${
+        className={`px-4 py-2 text-sm font-semibold mt-2 text-white transition-colors ${
           publicToggle
             ? "bg-green-500 hover:bg-green-600"
             : "bg-red-500 hover:bg-red-600"
@@ -226,22 +226,22 @@ const AddSetInput = () => {
       >
         {publicToggle ? "Public" : "Private"}
       </button>
-      <h3 className="font-semibold mt-2 text-white">Type of set:</h3>
+      <h3 className="font-semibold mt- text-white">Type of set:</h3>
       <select
         onChange={(e) => {
           const newType = e.target.value;
           setType(newType);
         }}
-        className="block w-full px-4 py-2 mt-2 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+        className="block w-full px-4 py-2 mt-2 bg-white border border-gray-300  focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
       >
         <option value="accounting">Accounting</option>
         <option value="questions">Questions</option>
       </select>
-      <h3 className="font-semibold mt-2 text-white">Type of question:</h3>
       {pairs.map((pair, index) => (
         <div className="flex flex-col space-y-4 mt-2" key={index}>
+          <h3 className="font-semibold mt-2 text-white">Type of question:</h3>
           <select
-            className="block w-full px-4 py-2 bg-white border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            className="block w-full px-4 py-2 bg-white border border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
             value={pair.questionType}
             onChange={(e) =>
               handleQuestionTypeChange(index, e.target.value as QuestionType)
