@@ -16,7 +16,7 @@ const QuizStartedView = ({ selectedSet }: IQuizInput) => {
 
   const totalQuestions = selectedSet.question.length;
   const currentQuestion: IQuestionItem = selectedSet.question[currentIndex];
-  const correctAnswer = currentQuestion.correctAnswer;
+  const correctAnswer = "" + currentQuestion.correctAnswer;
 
   const nav = useNavigate();
 
@@ -78,12 +78,7 @@ const QuizStartedView = ({ selectedSet }: IQuizInput) => {
         break;
 
       case QuestionType.TrueFalse:
-        if (
-          typeof correctAnswer === "boolean" &&
-          typeof inputValue === "boolean"
-        ) {
-          isCorrect = inputValue === correctAnswer;
-        }
+        isCorrect = inputValue.toString() === correctAnswer;
         break;
 
       case QuestionType.MultipleChoice:
@@ -181,7 +176,6 @@ const QuizStartedView = ({ selectedSet }: IQuizInput) => {
       </div>
     );
   }
-
   return (
     <div className="p-4">
       <p className="text-2xl text-white font-semibold">{selectedSet.title}</p>
