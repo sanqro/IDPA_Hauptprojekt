@@ -82,10 +82,13 @@ router.get("/get/:username", checkUserSetUsernameParams, async (req, res) => {
 
     for (let i = 0; i < fetchedScore.count; i++) {
       const set = await sets.get(fetchedScore.items[i].set as string);
+      if (set != null) {
       const setNameInScore: string = fetchedScore.items[i].set as string;
       const setNameWithoutUsername = setNameInScore.replace(set.creator as string, "");
       fetchedScore.items[i].set;
       fetchedScore.items[i].set = setNameWithoutUsername;
+      }
+
     }
     if (fetchedScore === null) {
       throw new Error("No scores found");
